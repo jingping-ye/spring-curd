@@ -1,7 +1,9 @@
 # spring-curd
 基于springboot的简单CURD
 
-## 1. 搭建项目框架
+## 第一部分：简单项目搭建和接口编写
+
+### 1. 搭建项目框架
 
 1. 初始化项目
 ![初始化项目](./note_img/init_project.jpg)
@@ -48,7 +50,7 @@
  </repositories>
 ```
 
-## 2. 配置服务器和数据库
+### 2. 配置服务器和数据库
 ```properties
 # 程序运行端口
 server.port=8099
@@ -76,7 +78,7 @@ mybatis-plus.mapper-locations=classpath:mapper/*.xml
 
 ```
 
-## 3. 搭建数据库
+### 3. 搭建数据库
 1. 搭建一个basic_curd数据库，含有一张表 user(用户表)
 
 ```mysql
@@ -97,7 +99,7 @@ create table user
 jdbc:mysql://localhost:3306/basic_curd?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
 ```
 
-## 4. 建立项目目录
+### 4. 建立项目目录
 
 ```js
 |-- java
@@ -122,7 +124,7 @@ jdbc:mysql://localhost:3306/basic_curd?characterEncoding=utf8&useSSL=false&serve
 	|-- templates
 ```
 
-##  5. 配置Swagger文档
+###  5. 配置Swagger文档
 
 ```java
 // config/SwaggerConfig.java
@@ -172,7 +174,7 @@ public class SwaggerConfig {
 @MapperScan("com.yjp.curd.dao")
 ```
 
-## 6.编写用户增删改查逻辑
+### 6.编写用户增删改查逻辑
 
 SQL语句映射：`UserMap.xml`
 
@@ -501,7 +503,7 @@ public class UserController {
 
 ```
 
-## 7. 启动
+### 7. 启动
 
 至此，项目完毕。
 
@@ -510,5 +512,24 @@ public class UserController {
 ```text
 http://localhost:8890/swagger-ui/index.html#/
 ```
-
 可以访问到接口。
+
+## 第二部分
+### 1. 设置跨域
+
+1. 简单设置（允许所有访问，不问来源）
+
+```java
+// 入口文件中:curdApplication.java
+ @Configuration
+    @EnableWebMvc
+    public class WebConfig implements WebMvcConfigurer {
+
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**").allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS");
+        }
+    }
+```
+
+
